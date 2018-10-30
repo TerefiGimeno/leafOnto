@@ -1,0 +1,8 @@
+Spp,Treatment,WP_predawn.mean.na,WP_predawn.s.err,,,Species,WP control,WP drought,,,,,
+PTE,Control,-0.45,0.07,,,P. aquilinum,M0.45 ± 0.07,M0.89 ± 0.25,,,,,
+PIN,Control,-0.37,0.10,,,P. pinaster,M0.37 ± 0.1,M-0.54 ± 0.08,,,,,
+BET,Control,-0.51,0.12,,,B. pendula,M0.51 ± 0.12,M-0.43 ± 0.18,,,,,
+QUE,Control,-0.53,0.09,,,Q. robur,M0.53 ± 0.09,M-0.6 ± 0.07,,,,,
+,,,,,,E. gunii,,M-0.97 ± 0.4,,,,,
+MOL,Control,-0.48,0.05,,,M. caerulea,M0.48 ± 0.05,M-0.92 ± 0.24,,,,,
+ZEA,Control,-0.40,0.05,,,Z. mays,M0.4 ± 0.25,M-1.42 ± 0.29,,,,,

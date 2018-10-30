@@ -1,0 +1,113 @@
+wp <- read.csv('dataLeafOnto/wpTest.csv')
+offset <- read.csv('dataLeafOnto/offset.csv')
+
+#calculate the volume of the soil in a pot of bases 15 and 11 cm and heigh 20-offset
+offset$vol <- ((20-offset$Offset_cm)/3)*(15^2+11^2+15*11)
+wp <- merge(wp, offset[, c('id','vol')], by='id', all.x=TRUE)
+wp$estDryWeight <- wp$bulk_den_g.cm3*wp$vol
+emptyPotWeight <- 65.6
+wp$estRWC <- (wp$weight_g-emptyPotWeight-wp$estDryWeight)*100/wp$estDryWeight
+wp$idf <- as.factor(paste0('id', wp$id))
+
+windows(12,8)
+par(mfrow=c(2,4), mar=c(2.5, 4, 2, 2))
+kk <- subset(wp, spp=="BET")
+plot(kk$wp_MPa~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="No. days", main="BET")
+legend("bottomleft", legend=c('1111','2113','3084', '2113'), pch=19, col=c("black", "red","green", "blue"))
+kk <- subset(wp, spp=="EUC")
+plot(kk$wp_MPa~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="No. days", main="EUC")
+legend("bottomleft", legend=c('4051','6024','7044', '8063'), pch=19, col=c("black", "red","green", "blue"))
+kk <- subset(wp, spp=="MOL")
+plot(kk$wp_MPa~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="No. days", main="MOL")
+legend("bottomleft", legend=c('3074','6063','7011', '8032', '9053'), pch=19, col=c("red","green", "blue", "cyan", 'magenta'))
+kk <- subset(wp, spp=="PIN")
+plot(kk$wp_MPa~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="No. days", main="PIN")
+legend("bottomleft", legend=c('1013','1081','1082', '1083', '2033'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="PTE")
+plot(kk$wp_MPa~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="No. days", main="PTE")
+legend("bottomleft", legend=c('1051','2073','6014', '7104', '8052'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="QUE")
+plot(kk$wp_MPa~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="No. days", main="QUE")
+legend("bottomleft", legend=c('1022','1023','3064', '5034', '6054'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="ZEA")
+plot(kk$wp_MPa~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="No. days", main="ZEA")
+legend("bottomleft", legend=c('1071','2024','3044', '4062'), pch=19, col=c("black", "red","green", "blue"))
+
+windows(12,8)
+par(mfrow=c(2,4), mar=c(2.5, 4, 2, 2))
+kk <- subset(wp, spp=="BET")
+plot(kk$wp_MPa~kk$estRWC, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="RWC %", main="BET",
+     xlim=c(5,160),ylim=c(-2.8,-0.))
+legend("bottomright", legend=c('1111','2113','3084', '2113'), pch=19, col=c("black", "red","green", "blue"))
+kk <- subset(wp, spp=="EUC")
+plot(kk$wp_MPa~kk$estRWC, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="RWC %", main="EUC",
+     xlim=c(5,160),ylim=c(-2.8,-0.))
+legend("bottomright", legend=c('4051','6024','7044', '8063'), pch=19, col=c("black", "red","green", "blue"))
+kk <- subset(wp, spp=="MOL")
+plot(kk$wp_MPa~kk$estRWC, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="RWC %", main="MOL",
+     xlim=c(5,160),ylim=c(-2.8,-0.))
+legend("bottomright", legend=c('3074','6063','7011', '8032', '9053'), pch=19, col=c("red","green", "blue", "cyan", 'magenta'))
+kk <- subset(wp, spp=="PIN")
+plot(kk$wp_MPa~kk$estRWC, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="RWC %", main="PIN",
+     xlim=c(5,160),ylim=c(-2.8,-0.))
+legend("bottomright", legend=c('1013','1081','1082', '1083', '2033'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="PTE")
+plot(kk$wp_MPa~kk$estRWC, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="RWC %", main="PTE",
+     xlim=c(5,160),ylim=c(-2.8,-0.))
+legend("bottomright", legend=c('1051','2073','6014', '7104', '8052'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="QUE")
+plot(kk$wp_MPa~kk$estRWC, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="RWC %", main="QUE",
+     xlim=c(5,160),ylim=c(-2.8,-0.))
+legend("bottomright", legend=c('1022','1023','3064', '5034', '6054'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="ZEA")
+plot(kk$wp_MPa~kk$estRWC, pch=19, cex=1.5, col=as.factor(kk$id), ylab=expression(Psi~(MPa)), xlab="RWC %", main="ZEA",
+     xlim=c(5,160),ylim=c(-2.8,-0.))
+legend("bottomright", legend=c('1071','2024','3044', '4062'), pch=19, col=c("black", "red","green", "blue"))
+
+windows(12,8)
+par(mfrow=c(2,4), mar=c(2.5, 4, 2, 2))
+kk <- subset(wp, spp=="BET")
+plot(kk$estRWC~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab='RWC %', xlab="No. days", main="BET")
+legend("topright", legend=c('1111','2113','3084', '2113'), pch=19, col=c("black", "red","green", "blue"))
+kk <- subset(wp, spp=="EUC")
+plot(kk$estRWC~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab='RWC %', xlab="No. days", main="EUC")
+legend("topright", legend=c('4051','6024','7044', '8063'), pch=19, col=c("black", "red","green", "blue"))
+kk <- subset(wp, spp=="MOL")
+plot(kk$estRWC~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab='RWC %', xlab="No. days", main="MOL")
+legend("topright", legend=c('3074','6063','7011', '8032', '9053'), pch=19, col=c("red","green", "blue", "cyan", 'magenta'))
+kk <- subset(wp, spp=="PIN")
+plot(kk$estRWC~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab='RWC %', xlab="No. days", main="PIN")
+legend("topright", legend=c('1013','1081','1082', '1083', '2033'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="PTE")
+plot(kk$estRWC~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab='RWC %', xlab="No. days", main="PTE")
+legend("topright", legend=c('1051','2073','6014', '7104', '8052'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="QUE")
+plot(kk$estRWC~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab='RWC %', xlab="No. days", main="QUE")
+legend("topright", legend=c('1022','1023','3064', '5034', '6054'), pch=19, col=c("black", "red","green", "blue", "cyan"))
+kk <- subset(wp, spp=="ZEA")
+plot(kk$estRWC~kk$day, pch=19, cex=1.5, col=as.factor(kk$id), ylab='RWC %', xlab="No. days", main="ZEA")
+legend("topright", legend=c('1071','2024','3044', '4062'), pch=19, col=c("black", "red","green", "blue"))
+
+windows(12,8)
+par(mfrow=c(2,4), mar=c(4.5, 4.5, 2, 2))
+with(subset(wp, spp=='BET'), boxplot(wp_MPa~day, main='BET',xlim=c(0,20),ylim=c(-2.8,-0.25),
+                                     ylab=expression(Psi~(MPa))))
+with(subset(wp, spp=='EUC'), boxplot(wp_MPa~day, main='EUC',xlim=c(0,20),ylim=c(-2.8,-0.25)))
+with(subset(wp, spp=='MOL'), boxplot(wp_MPa~day, main='MOL',xlim=c(0,20),ylim=c(-2.8,-0.25)))
+with(subset(wp, spp=='PIN'), boxplot(wp_MPa~day, main='PIN',xlim=c(0,20),ylim=c(-2.8,-0.25),xlab='No.Days'))
+with(subset(wp, spp=='PTE'), boxplot(wp_MPa~day, main='PTE',xlim=c(0,20),ylim=c(-2.8,-0.25),
+                                     ylab=expression(Psi~(Mpa)),xlab='No. Days'))
+with(subset(wp, spp=='QUE'), boxplot(wp_MPa~day, main='QUE',xlim=c(0,20),ylim=c(-2.8,-0.25),xlab='No. Days'))
+with(subset(wp, spp=='ZEA'), boxplot(wp_MPa~day, main='ZEA',xlim=c(0,20),ylim=c(-2.8,-0.25),xlab='No. Days'))
+
+
+windows(12,8)
+par(mfrow=c(2,4), mar=c(4.5, 4.5, 2, 2))
+with(subset(wp, spp=='BET'), boxplot(estRWC~day, main='BET',xlim=c(0,20),ylim=c(0,160),ylab='RWC %'))
+with(subset(wp, spp=='EUC'), boxplot(estRWC~day, main='EUC',xlim=c(0,20),ylim=c(0,160)))
+with(subset(wp, spp=='MOL'), boxplot(estRWC~day, main='MOL',xlim=c(0,20),ylim=c(0,160)))
+with(subset(wp, spp=='PIN'), boxplot(estRWC~day, main='PIN',xlim=c(0,20),ylim=c(0,160),xlab='No. Days'))
+with(subset(wp, spp=='PTE'), boxplot(estRWC~day, main='PTE',xlim=c(0,20),ylim=c(0,160),ylab='RWC %'),xlab='No. Days')
+with(subset(wp, spp=='QUE'), boxplot(estRWC~day, main='QUE',xlim=c(0,20),ylim=c(0,160),xlab='No. Days'))
+with(subset(wp, spp=='ZEA'), boxplot(estRWC~day, main='ZEA',xlim=c(0,20),ylim=c(0,160),xlab='No. Days'))
+

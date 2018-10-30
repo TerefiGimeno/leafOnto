@@ -1,0 +1,15 @@
+source('readLeafOnto/readLibsLeafOnto.R')
+source('readLeafOnto/basicFun.R')
+lma <- read.csv('dataLeafOnto/lma.csv')
+summary(aov(log(LMA_gr_m2)~spp*leafAge, data=lma))
+TukeyHSD(aov(log(LMA_gr_m2)~spp, data=lma))
+thick <- read.csv('dataLeafOnto/leafThickness.csv')
+summary(aov(log(thick_mm*1000)~spp*leafAge, data=thick))
+TukeyHSD(aov(log(thick_mm*1000)~spp, data=thick))
+lmaSumm <- as.data.frame(summarise(group_by(lma, spp, leafAge), lmaMean=mean.na(LMA_gr_m2),lmaSE=s.err(LMA_gr_m2)))
+thickSumm <- as.data.frame(summarise(group_by(thick, spp, leafAge), thickMean=mean.na(thick_mm)*1000,
+                                     thcikSE=s.err(thick_mm)*1000))
+morpho <- merge(lmaSumm, thickSumm, by=c('spp','leafAge'), all=T)
+morphoWide <- reshape(morpho, v.names=c("lmaMean","lmaSE","thickMean","thcikSE" ), 
+                      idvar='spp', timevar='leafAge', direction='wide')
+write.csv(morphoWide, file='outputLeafOnto/figure1.csv', row.names=F)
