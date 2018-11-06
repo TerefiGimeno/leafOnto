@@ -181,3 +181,5 @@ summary(lm(res~model, data=df))
 
 
 write.csv(gasexPred, file='outputLeafOnto/predVSobs.csv', row.names = F)
+
+lmtest::lrtest(modelFits[[28]], modelFitsMES[[28]])
