@@ -7,7 +7,7 @@ PsiSat = -35.3*9800e-6/BD^(-b) #--- MPa (Ogée & Brunet 2002, after Myrold et al
 KsrSat = 1e4                  #--- mol/m2/s/MPa (Dewar et al. 2018)
 #... plant hydraulic parameters
 PsiC = -2.                    #--- MPa (Dewar et al. 2018)
-Krl = c(2,7,12,50)*1e-3          #--- mol/m2/s/MPa (Dewar et al. 2018)
+Krl = c(2,7,12,30,50)*1e-3          #--- mol/m2/s/MPa (Dewar et al. 2018)
 #... plant photosynthetic parameters
 Km = 710.e-6                  #--- mol/mol (see SI)
 GStar = 40e-6                 #--- mol/mol (see SI)
@@ -34,11 +34,13 @@ ksiExport$nPsi <- PsiPD
 ksiExport$predksi2 <- ksi[,1]
 ksiExport$predksi7 <- ksi[,2]
 ksiExport$predksi12 <- ksi[,3]
-ksiExport$predksi50 <- ksi[,4]
+ksiExport$predksi30 <- ksi[,4]
+ksiExport$predksi50 <- ksi[,5]
 ksiExport$predEmax2 <- Emax[,1]
 ksiExport$predEmax7 <- Emax[,2]
 ksiExport$predEmax12 <- Emax[,3]
-ksiExport$predEmax50 <- Emax[,4]
+ksiExport$predEmax30 <- Emax[,4]
+ksiExport$predEmax50 <- Emax[,5]
 
 write.csv(ksiExport, file='outputLeafOnto/newFigure4second.csv', row.names=F)
 
